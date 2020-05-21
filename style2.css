@@ -1,0 +1,38 @@
+.header {
+    box-sizing: border-box;
+    color: white;
+    background: linear-gradient(to Right, #abf0ff, #00d1ff);
+    height: 100px;
+    padding-top: 25px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+.main{
+    width:900px;
+    min-height: 500px;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+
+.list .item{
+    font-size: 20px;
+    padding: 10px;
+    border : 5px dashed turquoise;
+    border-bottom: none;
+    border-radius: 10px; 
+}
+
+.list .item:last-child{
+    border-bottom: 5px dashed turquoise;
+}
+
+.footer{
+    border-top: 5px solid turquoise;
+}
+
+.footer span{
+    display: block;
+    text-align: center;
+}
