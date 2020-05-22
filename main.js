@@ -1,26 +1,48 @@
+loader = document.querySelector(".loader-container");
 const list = document.querySelector(".list");
 let coordsObj = {};
 let radius = 3000;
+let count_for_erase = 0;
 
-
-// function setRadius(){
-    
-// }
-
-function removeLoader(){
-    loader = document.querySelector(".loader-container");
-    loader.classList.add("remove");
+function setRadius(){
+    let val = prompt("1 ~ 5를 입력하세요!");
+    if( val === null){
+        return;
+    }else if( val > 5 || val < 1){
+        alert("잘못된 값을 입력하셨습니다. 1~5사이의 값을 넣어주세요.");
+    }else{
+        radius = val*1000;        
+        realizeLoader();
+        eraseItem();
+        init();
+    }   
 }
 
-function paintMaskInfo(maskInfo){
+function removeLoader(){
+    loader.style="display:none;";
+}
+
+function realizeLoader(){
+    loader.style="display:flex;";
+}
+
+function eraseItem(){
+    for(let i=0; i<count_for_erase;i++){
+        let item = document.getElementById("item"+i);
+        list.removeChild(item);
+    }
+}
+
+function paintItem(maskInfo){
 
     let brush;
     let paint;
     
     for(let i =0;i<maskInfo.count ; i++){
-        paint = `주소 : ${maskInfo.addr[i]} | 상태 : ${maskInfo.states[i]}`;
+        paint = `<span>이름</span> : ${maskInfo.name[i]} <span>상태</span> : ${maskInfo.states[i]}<br><span>주소</span> : ${maskInfo.addr[i]}`;
         brush = document.createElement('li');
         brush.className = "item";
+        brush.id= "item"+i;
         brush.innerHTML = paint;
         list.appendChild(brush);
     }
@@ -29,10 +51,12 @@ function paintMaskInfo(maskInfo){
 }
 
 function manufactureData(jsonData){
+    count_for_erase = jsonData.count;
     let bowl = [];
     let data = {
         count : jsonData.count,
         addr : jsonData.stores.map(x => x.addr),
+        name : jsonData.stores.map(x => x.name),
         states : jsonData.stores.map(x => {
             switch(x.remain_stat){
                 case "plenty" : bowl.push("100개 이상 있음");
@@ -49,7 +73,7 @@ function manufactureData(jsonData){
         })
     }
     data.states=bowl;
-    paintMaskInfo(data);
+    paintItem(data);
 }
 
 function getMaskJson(coordsObj){
