@@ -69,6 +69,7 @@ function manufactureData(jsonData){
                 break;
                 case "break" :  bowl.push("판매중지");
                 break;
+                default: bowl.push("폐쇄로 추정")
             }
         })
     }
